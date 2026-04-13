@@ -1,0 +1,44 @@
+{
+  "slug": "adam-optimizer",
+  "title": "Adam 옵티마이저 구현하기",
+  "title_en": "Adam Optimizer from Scratch",
+  "difficulty": "gold",
+  "category": "optimizer",
+  "tags": ["최적화", "Adam", "딥러닝기초"],
+  "allowed_libs": ["numpy"],
+  "function_name": "adam_step",
+  "time_limit_sec": 5,
+  "memory_limit_mb": 256,
+  "partial_score": true,
+  "description": "## 문제\n\n**Adam (Adaptive Moment Estimation)** 옵티마이저의 단일 업데이트 스텝을 구현하라.\n\n### 알고리즘\n\n파라미터 $\\theta$, 그래디언트 $g$, 스텝 $t$, 모멘트 $m$, $v$가 주어질 때:\n\n**1차 모멘트 (편향 없는 평균):**\n$$m_t = \\beta_1 m_{t-1} + (1 - \\beta_1) g_t$$\n\n**2차 모멘트 (편향 없는 분산):**\n$$v_t = \\beta_2 v_{t-1} + (1 - \\beta_2) g_t^2$$\n\n**편향 보정:**\n$$\\hat{m}_t = \\frac{m_t}{1 - \\beta_1^t}, \\quad \\hat{v}_t = \\frac{v_t}{1 - \\beta_2^t}$$\n\n**파라미터 업데이트:**\n$$\\theta_t = \\theta_{t-1} - \\alpha \\cdot \\frac{\\hat{m}_t}{\\sqrt{\\hat{v}_t} + \\epsilon}$$\n\n### 기본값\n$\\alpha=0.001$, $\\beta_1=0.9$, $\\beta_2=0.999$, $\\epsilon=10^{-8}$\n\n### 함수 시그니처\n\n```python\ndef adam_step(\n    theta: np.ndarray,  # 현재 파라미터\n    grad: np.ndarray,   # 그래디언트\n    m: np.ndarray,      # 1차 모멘트 (이전 스텝)\n    v: np.ndarray,      # 2차 모멘트 (이전 스텝)\n    t: int,             # 현재 스텝 번호 (1부터 시작)\n    lr: float = 0.001,\n    beta1: float = 0.9,\n    beta2: float = 0.999,\n    eps: float = 1e-8\n) -> tuple[np.ndarray, np.ndarray, np.ndarray]:\n    # (new_theta, new_m, new_v) 반환\n    pass\n```",
+  "function_signature": "import numpy as np\n\ndef adam_step(\n    theta: np.ndarray,\n    grad: np.ndarray,\n    m: np.ndarray,\n    v: np.ndarray,\n    t: int,\n    lr: float = 0.001,\n    beta1: float = 0.9,\n    beta2: float = 0.999,\n    eps: float = 1e-8\n) -> tuple:\n    \"\"\"\n    Adam 옵티마이저 단일 스텝.\n    \n    Returns:\n        (new_theta, new_m, new_v)\n    \"\"\"\n    # 여기에 코드를 작성하세요\n    pass",
+  "sample_test_cases": [
+    {
+      "input_data": "{\"theta\": [1.0, 2.0], \"grad\": [0.1, 0.2], \"m\": [0.0, 0.0], \"v\": [0.0, 0.0], \"t\": 1}",
+      "input_types": "{\"theta\": \"ndarray\", \"grad\": \"ndarray\", \"m\": \"ndarray\", \"v\": \"ndarray\", \"t\": \"int\"}",
+      "expected_output": "{\"type\": \"list\", \"data\": [{\"type\": \"ndarray\", \"data\": [0.999, 1.999]}, {\"type\": \"ndarray\", \"data\": [0.01, 0.02]}, {\"type\": \"ndarray\", \"data\": [0.00001, 0.00004]}]}",
+      "is_sample": true,
+      "score_weight": 0,
+      "order_index": 0
+    }
+  ],
+  "judge_test_cases": [
+    {
+      "input_data": "{\"theta\": [1.0, 2.0], \"grad\": [0.1, 0.2], \"m\": [0.0, 0.0], \"v\": [0.0, 0.0], \"t\": 1, \"lr\": 0.001, \"beta1\": 0.9, \"beta2\": 0.999, \"eps\": 1e-8}",
+      "input_types": "{\"theta\": \"ndarray\", \"grad\": \"ndarray\", \"m\": \"ndarray\", \"v\": \"ndarray\", \"t\": \"int\", \"lr\": \"float\", \"beta1\": \"float\", \"beta2\": \"float\", \"eps\": \"float\"}",
+      "expected_output": "{\"type\": \"list\", \"data\": [{\"type\": \"ndarray\", \"data\": [0.999, 1.999]}, {\"type\": \"ndarray\", \"data\": [0.01, 0.02]}, {\"type\": \"ndarray\", \"data\": [0.00001, 0.00004]}]}",
+      "is_sample": false,
+      "score_weight": 1.0,
+      "order_index": 1
+    },
+    {
+      "input_data": "{\"theta\": [0.5, -0.5, 1.0], \"grad\": [-0.3, 0.4, 0.1], \"m\": [0.05, -0.02, 0.01], \"v\": [0.001, 0.002, 0.0005], \"t\": 5, \"lr\": 0.001, \"beta1\": 0.9, \"beta2\": 0.999, \"eps\": 1e-8}",
+      "input_types": "{\"theta\": \"ndarray\", \"grad\": \"ndarray\", \"m\": \"ndarray\", \"v\": \"ndarray\", \"t\": \"int\", \"lr\": \"float\", \"beta1\": \"float\", \"beta2\": \"float\", \"eps\": \"float\"}",
+      "expected_output": "{\"type\": \"list\", \"data\": [{\"type\": \"ndarray\", \"data\": [0.5010, -0.5010, 0.9990]}, {\"type\": \"ndarray\", \"data\": [0.015, 0.022, 0.019]}, {\"type\": \"ndarray\", \"data\": [0.000991, 0.001958, 0.000500]}]}",
+      "is_sample": false,
+      "score_weight": 1.0,
+      "order_index": 2
+    }
+  ],
+  "reference_solution": "import numpy as np\n\ndef adam_step(theta, grad, m, v, t, lr=0.001, beta1=0.9, beta2=0.999, eps=1e-8):\n    m = beta1 * m + (1 - beta1) * grad\n    v = beta2 * v + (1 - beta2) * grad ** 2\n    m_hat = m / (1 - beta1 ** t)\n    v_hat = v / (1 - beta2 ** t)\n    theta = theta - lr * m_hat / (np.sqrt(v_hat) + eps)\n    return theta, m, v"
+}

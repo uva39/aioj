@@ -1,0 +1,44 @@
+{
+  "slug": "pca-from-scratch",
+  "title": "PCA (주성분 분석) 구현하기",
+  "title_en": "PCA (Principal Component Analysis) from Scratch",
+  "difficulty": "silver",
+  "category": "dimensionality_reduction",
+  "tags": ["PCA", "차원축소", "SVD", "공분산행렬"],
+  "allowed_libs": ["numpy"],
+  "function_name": "pca_transform",
+  "time_limit_sec": 10,
+  "memory_limit_mb": 256,
+  "partial_score": true,
+  "description": "## 문제\n\n데이터 행렬 $X \\in \\mathbb{R}^{n \\times d}$와 목표 차원 $k$가 주어질 때,\n**PCA (Principal Component Analysis)** 를 사용하여 $k$차원으로 투영된 결과를 반환하라.\n\n### 알고리즘\n\n1. **중심화**: $\\tilde{X} = X - \\bar{X}$ (각 피처의 평균을 빼기)\n2. **공분산 행렬**: $C = \\frac{1}{n-1} \\tilde{X}^\\top \\tilde{X}$\n3. **고유값 분해**: $C = V \\Lambda V^\\top$ (고유값 내림차순 정렬)\n4. **투영**: $Z = \\tilde{X} V_k$ (상위 $k$개 고유벡터 선택)\n\n> **힌트**: `np.linalg.eigh`는 대칭 행렬의 고유값을 안정적으로 계산한다.\n\n### 함수 시그니처\n\n```python\ndef pca_transform(\n    X: np.ndarray,  # shape: (n, d)\n    k: int          # 목표 차원\n) -> np.ndarray:    # shape: (n, k) — 투영된 데이터\n    pass\n```\n\n> **주의**: 부호 반전이 발생할 수 있으므로 채점은 부호를 고려하여 이루어진다.",
+  "function_signature": "import numpy as np\n\ndef pca_transform(\n    X: np.ndarray,\n    k: int\n) -> np.ndarray:\n    \"\"\"\n    PCA로 데이터를 k차원으로 투영합니다.\n    \n    Args:\n        X: 입력 데이터 (n, d)\n        k: 목표 차원 수\n    \n    Returns:\n        Z: 투영된 데이터 (n, k)\n    \"\"\"\n    # 여기에 코드를 작성하세요\n    pass",
+  "sample_test_cases": [
+    {
+      "input_data": "{\"X\": [[2.5, 2.4], [0.5, 0.7], [2.2, 2.9], [1.9, 2.2], [3.1, 3.0]], \"k\": 1}",
+      "input_types": "{\"X\": \"ndarray\", \"k\": \"int\"}",
+      "expected_output": "{\"type\": \"ndarray\", \"data\": [[0.8280], [-1.7776], [0.9922], [0.2742], [0.6832]]}",
+      "is_sample": true,
+      "score_weight": 0,
+      "order_index": 0
+    }
+  ],
+  "judge_test_cases": [
+    {
+      "input_data": "{\"X\": [[4,2],[3,4],[2,3],[1,6],[0,5]], \"k\": 1}",
+      "input_types": "{\"X\": \"ndarray\", \"k\": \"int\"}",
+      "expected_output": "{\"type\": \"ndarray\", \"data\": [[1.4142], [0.7071], [0.0], [-1.0607], [-1.0607]]}",
+      "is_sample": false,
+      "score_weight": 1.0,
+      "order_index": 1
+    },
+    {
+      "input_data": "{\"X\": [[1,0,0],[0,1,0],[0,0,1],[1,1,0],[1,0,1],[0,1,1]], \"k\": 2}",
+      "input_types": "{\"X\": \"ndarray\", \"k\": \"int\"}",
+      "expected_output": "{\"type\": \"ndarray\", \"data\": [[0.8165, 0.0], [0.8165, 0.0], [-1.6330, 0.0], [0.0, 0.5774], [0.0, -0.5774], [0.0, 0.0]]}",
+      "is_sample": false,
+      "score_weight": 1.0,
+      "order_index": 2
+    }
+  ],
+  "reference_solution": "import numpy as np\n\ndef pca_transform(X, k):\n    X_centered = X - X.mean(axis=0)\n    C = (X_centered.T @ X_centered) / (len(X) - 1)\n    eigenvalues, eigenvectors = np.linalg.eigh(C)\n    # 내림차순 정렬\n    idx = np.argsort(eigenvalues)[::-1]\n    eigenvectors = eigenvectors[:, idx]\n    Vk = eigenvectors[:, :k]\n    return X_centered @ Vk"
+}

@@ -1,0 +1,52 @@
+{
+  "slug": "relu-forward-backward",
+  "title": "ReLU 순전파와 역전파 구현하기",
+  "title_en": "ReLU Forward and Backward Pass",
+  "difficulty": "silver",
+  "category": "activation",
+  "tags": ["활성화함수", "역전파", "딥러닝기초"],
+  "allowed_libs": ["numpy"],
+  "function_name": "relu_forward_backward",
+  "time_limit_sec": 5,
+  "memory_limit_mb": 256,
+  "partial_score": true,
+  "description": "## 문제\n\n**ReLU(Rectified Linear Unit)** 활성화 함수의 순전파(forward)와 역전파(backward)를 구현하라.\n\n### ReLU 정의\n\n$$\\text{ReLU}(x) = \\max(0, x)$$\n\n### 역전파 (Chain Rule)\n\n상위 레이어에서 넘어온 그래디언트 $dout$이 주어질 때:\n\n$$\\frac{\\partial L}{\\partial x_i} = \\begin{cases} dout_i & \\text{if } x_i > 0 \\\\ 0 & \\text{if } x_i \\leq 0 \\end{cases}$$\n\n### 함수 시그니처\n\n```python\ndef relu_forward_backward(\n    x: np.ndarray,    # 입력 (임의 shape)\n    dout: np.ndarray  # 상위 레이어 그래디언트 (x와 동일 shape)\n) -> tuple[np.ndarray, np.ndarray]:\n    # (순전파 출력, 역전파 그래디언트) 튜플 반환\n    pass\n```\n\n### 예제\n\n```python\nx    = np.array([-1.0, 0.0, 2.0, -0.5, 3.0])\ndout = np.array([ 1.0, 1.0, 1.0,  1.0, 1.0])\n\nout, dx = relu_forward_backward(x, dout)\n# out = [0.0, 0.0, 2.0, 0.0, 3.0]\n# dx  = [0.0, 0.0, 1.0, 0.0, 1.0]\n```",
+  "function_signature": "import numpy as np\n\ndef relu_forward_backward(\n    x: np.ndarray,\n    dout: np.ndarray\n) -> tuple:\n    \"\"\"\n    ReLU 순전파와 역전파를 계산합니다.\n    \n    Args:\n        x: 입력 배열 (임의 shape)\n        dout: 상위 레이어 그래디언트 (x와 동일 shape)\n    \n    Returns:\n        (out, dx) 튜플\n          out: ReLU 순전파 결과\n          dx: x에 대한 그래디언트\n    \"\"\"\n    # 여기에 코드를 작성하세요\n    pass",
+  "sample_test_cases": [
+    {
+      "input_data": "{\"x\": [-1.0, 0.0, 2.0, -0.5, 3.0], \"dout\": [1.0, 1.0, 1.0, 1.0, 1.0]}",
+      "input_types": "{\"x\": \"ndarray\", \"dout\": \"ndarray\"}",
+      "expected_output": "{\"type\": \"list\", \"data\": [{\"type\": \"ndarray\", \"data\": [0.0, 0.0, 2.0, 0.0, 3.0]}, {\"type\": \"ndarray\", \"data\": [0.0, 0.0, 1.0, 0.0, 1.0]}]}",
+      "is_sample": true,
+      "score_weight": 0,
+      "order_index": 0
+    }
+  ],
+  "judge_test_cases": [
+    {
+      "input_data": "{\"x\": [2.0, -3.0, 0.5, -0.1, 4.0], \"dout\": [0.5, 0.3, 0.8, 0.2, 0.1]}",
+      "input_types": "{\"x\": \"ndarray\", \"dout\": \"ndarray\"}",
+      "expected_output": "{\"type\": \"list\", \"data\": [{\"type\": \"ndarray\", \"data\": [2.0, 0.0, 0.5, 0.0, 4.0]}, {\"type\": \"ndarray\", \"data\": [0.5, 0.0, 0.8, 0.0, 0.1]}]}",
+      "is_sample": false,
+      "score_weight": 1.0,
+      "order_index": 1
+    },
+    {
+      "input_data": "{\"x\": [[-1.0, 2.0], [3.0, -4.0]], \"dout\": [[1.0, 2.0], [3.0, 4.0]]}",
+      "input_types": "{\"x\": \"ndarray\", \"dout\": \"ndarray\"}",
+      "expected_output": "{\"type\": \"list\", \"data\": [{\"type\": \"ndarray\", \"data\": [[0.0, 2.0], [3.0, 0.0]]}, {\"type\": \"ndarray\", \"data\": [[0.0, 2.0], [3.0, 0.0]]}]}",
+      "is_sample": false,
+      "score_weight": 1.0,
+      "order_index": 2
+    },
+    {
+      "input_data": "{\"x\": [0.001, -0.001, 100.0, -100.0], \"dout\": [1.0, 1.0, 1.0, 1.0]}",
+      "input_types": "{\"x\": \"ndarray\", \"dout\": \"ndarray\"}",
+      "expected_output": "{\"type\": \"list\", \"data\": [{\"type\": \"ndarray\", \"data\": [0.001, 0.0, 100.0, 0.0]}, {\"type\": \"ndarray\", \"data\": [1.0, 0.0, 1.0, 0.0]}]}",
+      "is_sample": false,
+      "score_weight": 1.0,
+      "order_index": 3
+    }
+  ],
+  "reference_solution": "import numpy as np\n\ndef relu_forward_backward(x, dout):\n    out = np.maximum(0, x)\n    dx = dout * (x > 0)\n    return out, dx"
+}

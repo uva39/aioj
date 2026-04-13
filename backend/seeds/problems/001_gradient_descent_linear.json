@@ -1,0 +1,60 @@
+{
+  "slug": "gradient-descent-linear",
+  "title": "경사하강법으로 선형회귀 구현하기",
+  "title_en": "Linear Regression via Gradient Descent",
+  "difficulty": "bronze",
+  "category": "linear_model",
+  "tags": ["선형회귀", "경사하강법", "최적화"],
+  "allowed_libs": ["numpy"],
+  "function_name": "gradient_descent",
+  "time_limit_sec": 10,
+  "memory_limit_mb": 256,
+  "partial_score": true,
+  "description": "## 문제\n\n행렬 $X \\in \\mathbb{R}^{n \\times d}$와 타겟 벡터 $y \\in \\mathbb{R}^n$가 주어질 때,\n**경사하강법(Gradient Descent)** 을 사용하여 선형회귀의 가중치 벡터 $w \\in \\mathbb{R}^d$를 학습하라.\n\n### 수식\n\n손실 함수 (MSE):\n$$L(w) = \\frac{1}{n} \\|Xw - y\\|^2$$\n\n그래디언트:\n$$\\nabla_w L = \\frac{2}{n} X^\\top (Xw - y)$$\n\n업데이트 규칙:\n$$w \\leftarrow w - \\alpha \\cdot \\nabla_w L$$\n\n여기서 $\\alpha$는 학습률(learning rate)이다.\n\n### 조건\n- 가중치 $w$는 **영벡터(0)로 초기화**한다.\n- `sklearn`, `torch` 등 ML 라이브러리 사용 **금지**. `numpy`만 사용할 것.\n\n### 함수 시그니처\n\n```python\ndef gradient_descent(\n    X: np.ndarray,  # shape: (n, d)\n    y: np.ndarray,  # shape: (n,)\n    lr: float,      # 학습률\n    n_iter: int     # 반복 횟수\n) -> np.ndarray:    # shape: (d,) — 학습된 가중치 w\n    pass\n```\n\n### 예제\n\n```python\nX = np.array([[1, 1], [1, 2], [1, 3]])\ny = np.array([2.0, 3.0, 4.0])\nw = gradient_descent(X, y, lr=0.1, n_iter=1000)\n# w ≈ [1.0, 1.0]  (bias=1, slope=1)\n```\n\n> **힌트**: `X.T @ (X @ w - y)` 로 그래디언트를 계산하라.",
+  "function_signature": "import numpy as np\n\ndef gradient_descent(\n    X: np.ndarray,\n    y: np.ndarray,\n    lr: float,\n    n_iter: int\n) -> np.ndarray:\n    \"\"\"\n    경사하강법으로 선형회귀 가중치를 학습합니다.\n    \n    Args:\n        X: 입력 행렬 (n, d)\n        y: 타겟 벡터 (n,)\n        lr: 학습률\n        n_iter: 반복 횟수\n    \n    Returns:\n        w: 학습된 가중치 벡터 (d,)\n    \"\"\"\n    # 여기에 코드를 작성하세요\n    pass",
+  "sample_test_cases": [
+    {
+      "input_data": "{\"X\": [[1,1],[1,2],[1,3]], \"y\": [2.0, 3.0, 4.0], \"lr\": 0.1, \"n_iter\": 1000}",
+      "input_types": "{\"X\": \"ndarray\", \"y\": \"ndarray\", \"lr\": \"float\", \"n_iter\": \"int\"}",
+      "expected_output": "{\"type\": \"ndarray\", \"data\": [1.0, 1.0]}",
+      "is_sample": true,
+      "score_weight": 0,
+      "order_index": 0
+    }
+  ],
+  "judge_test_cases": [
+    {
+      "input_data": "{\"X\": [[1,1],[1,2],[1,3],[1,4],[1,5]], \"y\": [2.0,3.0,4.0,5.0,6.0], \"lr\": 0.05, \"n_iter\": 2000}",
+      "input_types": "{\"X\": \"ndarray\", \"y\": \"ndarray\", \"lr\": \"float\", \"n_iter\": \"int\"}",
+      "expected_output": "{\"type\": \"ndarray\", \"data\": [1.0, 1.0]}",
+      "is_sample": false,
+      "score_weight": 1.0,
+      "order_index": 1
+    },
+    {
+      "input_data": "{\"X\": [[1,0],[1,1],[1,2],[1,3]], \"y\": [0.5,1.5,2.5,3.5], \"lr\": 0.05, \"n_iter\": 2000}",
+      "input_types": "{\"X\": \"ndarray\", \"y\": \"ndarray\", \"lr\": \"float\", \"n_iter\": \"int\"}",
+      "expected_output": "{\"type\": \"ndarray\", \"data\": [0.5, 1.0]}",
+      "is_sample": false,
+      "score_weight": 1.0,
+      "order_index": 2
+    },
+    {
+      "input_data": "{\"X\": [[2,1,3],[1,2,1],[3,3,2],[2,1,4],[1,3,2]], \"y\": [14.0,8.0,16.0,16.0,11.0], \"lr\": 0.01, \"n_iter\": 3000}",
+      "input_types": "{\"X\": \"ndarray\", \"y\": \"ndarray\", \"lr\": \"float\", \"n_iter\": \"int\"}",
+      "expected_output": "{\"type\": \"ndarray\", \"data\": [2.0, 1.0, 3.0]}",
+      "is_sample": false,
+      "score_weight": 1.0,
+      "order_index": 3
+    },
+    {
+      "input_data": "{\"X\": [[1,0,0],[0,1,0],[0,0,1],[1,1,0],[1,0,1]], \"y\": [3.0,2.0,4.0,5.0,7.0], \"lr\": 0.05, \"n_iter\": 2000}",
+      "input_types": "{\"X\": \"ndarray\", \"y\": \"ndarray\", \"lr\": \"float\", \"n_iter\": \"int\"}",
+      "expected_output": "{\"type\": \"ndarray\", \"data\": [3.0, 2.0, 4.0]}",
+      "is_sample": false,
+      "score_weight": 1.0,
+      "order_index": 4
+    }
+  ],
+  "reference_solution": "import numpy as np\n\ndef gradient_descent(X, y, lr, n_iter):\n    n, d = X.shape\n    w = np.zeros(d)\n    for _ in range(n_iter):\n        grad = (2 / n) * X.T @ (X @ w - y)\n        w -= lr * grad\n    return w"
+}
