@@ -39,9 +39,12 @@ async def submit(
     db.add(submission)
     await db.flush()
 
-    # Celery 채점 태스크 enqueue
-    from app.services.submission_service import enqueue_judge
-    await enqueue_judge(str(submission.id))
+    # 채점 태스크 enqueue (judge worker 미배포 시 에러를 무시하고 pending 유지)
+    try:
+        from app.services.submission_service import enqueue_judge
+        await enqueue_judge(str(submission.id))
+    except Exception:
+        pass
 
     return submission
 
