@@ -159,6 +159,9 @@ export async function POST(req: NextRequest) {
         continue;
       }
 
+      const tagsLiteral = `{${p.tags.map((t) => `"${t}"`).join(",")}}`;
+      const libsLiteral = `{${p.allowed_libs.map((l) => `"${l}"`).join(",")}}`;
+
       const pResult = await sql`
         INSERT INTO problems (
           slug, title, title_en, description, function_signature, function_name,
@@ -167,7 +170,7 @@ export async function POST(req: NextRequest) {
         ) VALUES (
           ${p.slug}, ${p.title}, ${p.title_en}, ${p.description},
           ${p.function_signature}, ${p.function_name},
-          ${p.difficulty}, ${p.category}, ${p.tags}, ${p.allowed_libs},
+          ${p.difficulty}, ${p.category}, ${tagsLiteral}::text[], ${libsLiteral}::text[],
           ${p.time_limit_sec}, ${p.memory_limit_mb}, ${p.partial_score}
         )
         RETURNING id
